@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simulação Didática - Conscientização em Cibersegurança</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: #820ad1;
+      color: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Faixa de Aviso Didático */
+    .educational-banner {
+      background-color: #ffcc00;
+      color: #1a1a1a;
+      text-align: center;
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+
+    /* Barra Superior */
+    header {
+      background-color: #ffffff;
+      padding: 12px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #e5e5e5;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .mock-logo {
+      background-color: #820ad1;
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 22px;
+      padding: 4px 12px;
+      border-radius: 6px;
+      letter-spacing: -1px;
+    }
+
+    .header-btn {
+      background-color: #820ad1;
+      color: #ffffff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    /* Conteúdo Central */
+    main {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 48px 24px 60px 24px;
+      width: 100%;
+    }
+
+    .hero-title {
+      font-size: 40px;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 40px;
+      letter-spacing: -0.8px;
+    }
+
+    /* Grade de Cartões */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+
+    .card {
+      background-color: #61009c;
+      padding: 28px;
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 180px;
+      transition: transform 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+    }
+
+    .card h3 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .card p {
+      font-size: 15px;
+      line-height: 1.5;
+      color: #f3e8ff;
+    }
+
+    .card-icon {
+      background-color: #820ad1;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 18px;
+      margin-top: 20px;
+    }
+
+    /* Cartão do Formulário de Demonstração */
+    .form-card {
+      background-color: #ffffff;
+      color: #333333;
+      padding: 32px;
+      border-radius: 16px;
+      max-width: 480px;
+      margin: 0 auto;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+
+    .form-card h2 {
+      font-size: 20px;
+      color: #820ad1;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+
+    .form-card p {
+      font-size: 14px;
+      color: #666666;
+      margin-bottom: 24px;
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    .input-group {
+      margin-bottom: 16px;
+    }
+
+    .input-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #444444;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid #cccccc;
+      border-radius: 8px;
+      font-size: 15px;
+      outline: none;
+    }
+
+    .input-group input:focus {
+      border-color: #820ad1;
+    }
+
+    .submit-btn {
+      width: 100%;
+      background-color: #820ad1;
+      color: #ffffff;
+      border: none;
+      padding: 14px;
+      border-radius: 24px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .submit-btn:hover {
+      background-color: #6e08b3;
+    }
+
+    /* Modal Educativo */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.7);
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      z-index: 1000;
+    }
+
+    .modal-content {
+      background: #ffffff;
+      color: #222222;
+      padding: 32px;
+      border-radius: 16px;
+      max-width: 500px;
+      width: 100%;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .modal-header h3 {
+      font-size: 20px;
+      color: #d90429;
+    }
+
+    .modal-body p {
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: 14px;
+      color: #444444;
+    }
+
+    .modal-body ul {
+      margin-left: 20px;
+      margin-bottom: 20px;
+      font-size: 14px;
+      color: #333333;
+    }
+
+    .modal-body li {
+      margin-bottom: 6px;
+    }
+
+    .modal-close-btn {
+      width: 100%;
+      background-color: #222222;
+      color: #ffffff;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Faixa Didática Obrigatória -->
+  <div class="educational-banner">
+    ⚠️ AMBIENTE DIDÁTICO DE CONSCIENTIZAÇÃO — NENHUM DADO SERÁ SALVO OU TRANSMITIDO
+  </div>
+
+  <!-- Barra de Navegação -->
+  <header>
+    <div class="logo-container">
+      <div class="mock-logo">nu</div>
+    </div>
+    <button class="header-btn" type="button">Quero ser cliente</button>
+  </header>
+
+  <main>
+    <h1 class="hero-title">Tudo que você precisa em um único app</h1>
+
+    <!-- Cartões Informativos semelhantes ao print -->
+    <div class="cards-grid">
+      <div class="card">
+        <div>
+          <h3>Dentro do app</h3>
+          <p>Empréstimos, seguros e soluções financeiras que combinam com seu momento de vida.</p>
+        </div>
+        <div class="card-icon">$</div>
+      </div>
+
+      <div class="card">
+        <div>
+          <h3>Cashback na sua conta</h3>
+          <p>Opções de rendimento e vantagens direto no aplicativo a partir de R$ 1.</p>
+        </div>
+        <div class="card-icon">&infin;</div>
+      </div>
+    </div>
+
+    <!-- Formulário de Simulação de Phishing / Coleta -->
+    <div class="form-card">
+      <h2>Confirmação de Acesso</h2>
+      <p>Para concluir a ativação de suas preferências, insira suas credenciais cadastradas:</p>
+
+      <form id="demoForm" onsubmit="handleDemoSubmit(event)">
+        <div class="input-group">
+          <label for="userCpf">CPF do Titular</label>
+          <input type="text" id="userCpf" placeholder="000.000.000-00" required autocomplete="off">
+        </div>
+
+        <div class="input-group">
+          <label for="userPassword">Senha de Acesso (App)</label>
+          <input type="password" id="userPassword" placeholder="Digite sua senha" required autocomplete="off">
+        </div>
+
+        <button type="submit" class="submit-btn">Continuar Validação</button>
+      </form>
+    </div>
+  </main>
+
+  <!-- Modal Pedagógico Disparado ao Clicar -->
+  <div class="modal-overlay" id="eduModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span style="font-size: 28px;">🚨</span>
+        <h3>Simulação de Ataque (Phishing)</h3>
+      </div>
+      <div class="modal-body">
+        <p><strong>Atenção:</strong> Se este fosse um ataque real de Engenharia Social, suas credenciais teriam sido interceptadas pelo atacante.</p>
+        <p><strong>Sinais de alerta demonstrados nesta página:</strong></p>
+        <ul>
+          <li><strong>Domínio no Navegador:</strong> A URL não pertence ao domínio oficial da instituição financeira.</li>
+          <li><strong>Origem do Link:</strong> A página foi aberta a partir de um link externo em e-mail/mensagem, em vez do aplicativo oficial.</li>
+          <li><strong>Solicitação Atípica:</strong> Bancos raramente solicitam senhas completas de aplicativo diretamente em páginas web externas.</li>
+        </ul>
+        <p style="font-size: 12px; color: #777;">Nenhum dado digitado foi armazenado ou enviado pela rede.</p>
+      </div>
+      <button class="modal-close-btn" onclick="closeEduModal()">Entendido</button>
+    </div>
+  </div>
+
+  <script>
+    function handleDemoSubmit(event) {
+      // 1. Interrompe o envio do formulário para garantir que NENHUM dado trafegue
+      event.preventDefault();
+
+      // 2. Limpa os campos imediatamente para segurança
+      document.getElementById('userCpf').value = '';
+      document.getElementById('userPassword').value = '';
+
+      // 3. Exibe o modal educativo para a plateia da apresentação
+      document.getElementById('eduModal').style.display = 'flex';
+    }
+
+    function closeEduModal() {
+      document.getElementById('eduModal').style.display = 'none';
+    }
+  </script>
+
+</body>
+</html>
